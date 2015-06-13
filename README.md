@@ -51,19 +51,20 @@ Web Download Manager (HTTP, HTTPs, DLC, XDCC)
   <li>pyLoad</li>
 </ul>
 
-Personal Indexs
+Personal Indexers:
 <ul>
   <li>BitCannon</li>
   <li>NZBMegaSearch</li>
 </ul>
 
-Management
+Management:
 <ul>
   <li>HTPC-Manager</li>
   <li>GateOne</li>
 </ul>
 
-Reverse Proxy
+Reverse Proxy:
 <ul>
+  <li>Apache</li>
   <li>Nginx</li>
 </ul>
