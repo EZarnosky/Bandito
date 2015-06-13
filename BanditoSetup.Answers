@@ -1,43 +1,48 @@
+[Account]
+User = bandito
+Password = bandito
+Group = El_Bandito
+
 [Movie]
-CouchPotato=YES
+CouchPotato = YES
 
 [TV Shows]
-Sonarr=NO
-SickBeard=NO
-SickRage=YES
-SickGear=NO
+SickBeard = NO
+SickGear = NO
+SickRage = YES
+Sonarr = NO
 
 [Music]
-Headphones=YES
+Headphones = YES
 
 [eBooks]
-LazyLibrarian=YES
+LazyLibrarian = YES
 
 [Comics]
-Mylar=YES
+Mylar = YES
 
 [NZB]
-NZBGet=YES
-nZEDb=NO
-SABNzbd=NO
+NZBGet = YES
+nZEDb = NO
+SABNzbd = NO
 
 [Bittorrent]
-uTorrent=NO
-Transmission=NO
-Deluge=YES
-rTorrent/ruTorrent=NO
+Deluge = YES
+rTorrent/ruTorrent = NO
+Transmission = NO
+uTorrent = NO
 
 [Web Download Manager]
-pyLoad=YES
+pyLoad = YES
 
 [Indexers]
-BitCannon=YES
-NZBMegaSearch=NO
+BitCannon = YES
+NZBMegaSearch = NO
 
 [Management]
-HTPC-Manager=YES
-GateOne=YES
+GateOne = YES
+HTPC-Manager = YES
 
 [ReverseProxy]
-Apache=NO
-Nginx=YES
+Apache = NO
+Nginx = YES
