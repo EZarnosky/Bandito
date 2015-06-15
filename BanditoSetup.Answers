@@ -28,7 +28,7 @@ SABNzbd = NO
 
 [Bittorrent]
 Deluge = YES
-rTorrent/ruTorrent = NO
+rTorrent = NO
 Transmission = NO
 uTorrent = NO
 
