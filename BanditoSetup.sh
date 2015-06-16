@@ -9,21 +9,21 @@
 # TODO: Read Conf file
 
 #--> Create user account and group
-useradd -ou 0 -g 0 $Bandito_User
+useradd -ou 0 -g 0 -d /home/bandito -m $Bandito_User
 passwd $Bandito_Password
 
-sudo addgroup $Bandito_Group
-sudo usermod -a -G $Bandito_Group $Bandito_User
+addgroup $Bandito_Group
+usermod -a -G $Bandito_Group $Bandito_User
 
 #--> Create folder structure
-sudo mkdir $Ban_Home
-sudo mkdir $Ban_Conf
-sudo mkdir $Ban_Packages
-sudo mkdir $Ban_Installer
-sudo mkdir $Ban_Incoming
-sudo mkdir $Ban_Scripts
-sudo mkdir $Ban_Backup
-sudo mkdir $Ban_Logs
+mkdir $Ban_Home
+mkdir $Ban_Conf
+mkdir $Ban_Packages
+mkdir $Ban_Installer
+mkdir $Ban_Incoming
+mkdir $Ban_Scripts
+mkdir $Ban_Backup
+mkdir $Ban_Logs
 
 #--> Update the repositories
 echo "Updating Repositories"
