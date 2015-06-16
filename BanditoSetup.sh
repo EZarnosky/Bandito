@@ -27,16 +27,15 @@ sudo mkdir $Ban_Logs
 
 #--> Update the repositories
 echo "Updating Repositories"
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-get apt-transport-https --force -y
+apt-get update
+apt-get upgrade -y
+apt-get install apt-transport-https -y
 
-#--> Load nano editor and midnight commander
-
-sudo apt-get nano mc -y
+#--> Install midnight commander
+apt-get install mc -y
 
 #--> Install coomon shared packages
-sudo apt-get python git -y
+apt-get install python git -y
 
 #---> Part 2: Selective install
 # Read BanditoSetup.Answers for what the user wants installed
