@@ -15,9 +15,9 @@ python setup.py install
 
 #--> Setup links in to the Bandito Box folders
 mkdir $Ban_Conf/gateone
-ln -s /etc/gateone/conf.d/10server.conf $Ban_Conf/GateOne/server.conf
-ln -s /etc/gateone/conf.d/20authentication.conf $Ban_Conf/GateOne/authentication.conf
-ln -s /etc/gateone/conf.d/50terminal.conf $Ban_Conf/GateOne/terminal.conf
+ln -s /etc/gateone/conf.d/10server.conf $Ban_Conf/GateOne.svr.conf
+ln -s /etc/gateone/conf.d/20authentication.conf $Ban_Conf/GateOne.auth.conf
+ln -s /etc/gateone/conf.d/50terminal.conf $Ban_Conf/GateOne.term.conf
 ln -s /var/log/gateone/gateone.log $Ban_Logs/GateOne.log
 
 #--> Backup GateOne's original configs

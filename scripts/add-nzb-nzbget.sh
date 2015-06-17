@@ -22,7 +22,7 @@ mkdir $Ban_Backup/NZBGet
 cp /usr/share/nzbget/nzbget.conf $Ban_Backup/NZBGet/nzbget.conf-backup
 
 #--> Link to the 
-ln -s /usr/share/nzbget/nzbget.conf $Ban_Conf/nzbget.conf
+ln -s /usr/share/nzbget/nzbget.conf $Ban_Conf/NZBGet.conf
 ln -s /usr/share/nzbget/nzbget.conf /etc/nzbget.conf
 
 #--> Edit the config file
@@ -38,4 +38,4 @@ sed -i 's#DaemonUsername=root#DaemonUsername='$Bandito_User'#g' $Ban_Conf/nzbget
 cp /opt/Bandito-Box/conf/etc_init.d_nzbget.conf /etc/init.d/nzbget
 chown $Bandito_User:$Bandito_Group /etc/init.d/nzbget
 chmod +x /etc/init.d/nzbget
-update-rc.d /etc/init.d/nzbget defaults
+update-rc.d nzbget defaults

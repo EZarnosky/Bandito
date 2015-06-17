@@ -16,7 +16,7 @@ dpkg -i mono*.deb
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC
 echo "deb https://apt.sonarr.tv/ master main" | tee -a /etc/apt/sources.list.d/sonarr-nzbdrone.list
 apt-get update
-http://so
+
 #--> Install Sonarr/NZBDrone
 apt-get install nzbdrone -y
 chown -R $Bandito_User:$Bandito_Group /opt/NzbDrone
@@ -24,11 +24,28 @@ chown -R $Bandito_User:$Bandito_Group /opt/NzbDrone
 #--> Start Sonarr/NZBDrone
 mono /opt/NzbDrone/NzbDrone.exe
 
-#--> Configure Autostart for Sonarr/NZBDrone
-cp /opt/Bandito-Box/conf/etc_init.d_nzbdrone.conf /etc/init.d/nzbdrone
+#--> Copy autostart file for Sonarr/NZBDrone
+cp /opt/Bandito-Box/conf/etc_init.d_nzbdrone.confnsno
 chown $Bandito_User:$Bandito_Group /etc/init.d/nzbdrone
 chmod +x /etc/init.d/nzbdrone
-update-rc.d /etc/init.d/nzbdrone defaults
 
+#--> Change user Sonarr/NZBDrone runs as
+sed -i 's/RUN_AS=pi/RUN_AS='$Bandito_User'/g' /etc/init.d/nzbdrone
 
-RUN_AS=pi
+#--> Load settings into the system
+update-rc.d nzbdrone defaults
+
+ln -s /etc/init.d/nzbdrone /etc/init.d/sonarr
+ln -s /root/.config/NzbDrone/config.xml $Ban_Conf/NZBDrone-Sonarr.conf
+ln -s /root/.config/NzbDrone/logs $Ban_Logs/NZBDrone-Sonarr.log
+
+#--> need to start NZBDrone/Sonarr to generate the config.xml
+/etc/init.d/nzbdrone start
+sleep 15s
+
+#--> stop NZBDrone/Sonarr so the the config.xml can be modified
+/etc/init.d/nzbdrone stop
+sed -i 's#<LaunchBrowser>True</LaunchBrowser>#<LaunchBrowser>False</LaunchBrowser>#g' $Ban_Conf/sonarr.conf
+
+#--> final task start NZBDrone/Sonarr
+/etc/init.d/nzbdrone start

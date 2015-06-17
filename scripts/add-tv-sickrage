@@ -1,3 +1,15 @@
 #!/bin/sh
 #---> SickRage
-git clone $Git_SickRage /opt/sickrage
+#--> Install dependencies
+apt-get install python-cheetah python-pip python-dev git-core -y
+pip install pyopenssl==0.13.1
+
+#--> Clone SickRage git
+git clone $Git_SickRage /opt/SickRage
+chown -R $Bandito_User:$Bandito_Group /opt/SickRage
+
+#--> Start SickRage
+python /opt/SickRage/SickBeard.py -d
+
+
+cp /opt/Bandito-Box/conf/etc_default_sickrage.conf /etc/default/sickrage
