@@ -29,11 +29,18 @@ apt-get update
 apt-get upgrade -y
 apt-get install apt-transport-https -y
 
-#--> Install midnight commander
+#--> Install common shared packages
 apt-get install mc -y
 
-#--> Install SMB and NTFS packages
+
+#--> Install file system packages
 apt-get install cifs-utils ntfs-3g -y
+
+#--> Install git and compile packages
+apt-get install make gcc git -y
+
+#--> Install basic python packages
+apt-get install python python-dev -y
 
 #--> Create mount folders and mount drives
 mkdir -p /mnt/usb_dl_store
@@ -59,13 +66,10 @@ echo "$Share_Backup_Path /mnt/net_backup_share cifs username=$Share_Backup_User,
 echo '' >> /etc/fstab
 
 #--> Generate self signed SSL vertificate
-mkdir -p $Ban_Apps/bandito/ssl && $Ban_Apps/bandito/ssl
+mkdir -p $Ban_Apps/bandito-box/ssl && cd $Ban_Apps/bandito-box/ssl
 openssl genrsa 1024 > bandito_ssl.key
-openssl req -new -key ssl.key -out bandito_ssl.csr -subj $SSL_Subj
+openssl req -new -key bandito_ssl.key -out bandito_ssl.csr -subj $SSL_Subj
 openssl req -days 36500 -x509 -key bandito_ssl.key -in bandito_ssl.csr > bandito_ssl.crt 
-
-#--> Install coomon shared packages
-apt-get install make gcc git python python-dev -y
 
 #---> Part 2: Selective install
 # Read BanditoSetup.Answers for what the user wants installed
