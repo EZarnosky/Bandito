@@ -1,3 +1,34 @@
 #!/bin/sh
 #---> Sonarr
-git clone 
+#--> Load Raspbian repo for installing libmono-cil-dev, remove afterwards
+echo "deb http://archive.raspbian.org/raspbian wheezy main contrib non-free" |  tee -a /etc/apt/sources.list.d/libmono-cil-dev.list
+apt-get update
+apt-get install libmono-cil-dev -y --force-yes
+rm  /etc/apt/sources.list.d/libmono-cil-dev.list
+apt-get update
+
+#--> Install Mono
+mkdir $Ban_Packages/Mono && cd $Ban_Packages/Mono
+wget $Deb_Mono
+dpkg -i mono*.deb
+
+#--> Add Sonarr/NZBDrone Repo
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC
+echo "deb https://apt.sonarr.tv/ master main" | tee -a /etc/apt/sources.list.d/sonarr-nzbdrone.list
+apt-get update
+http://so
+#--> Install Sonarr/NZBDrone
+apt-get install nzbdrone -y
+chown -R $Bandito_User:$Bandito_Group /opt/NzbDrone
+
+#--> Start Sonarr/NZBDrone
+mono /opt/NzbDrone/NzbDrone.exe
+
+#--> Configure Autostart for Sonarr/NZBDrone
+cp /opt/Bandito-Box/conf/etc_init.d_nzbdrone.conf /etc/init.d/nzbdrone
+chown $Bandito_User:$Bandito_Group /etc/init.d/nzbdrone
+chmod +x /etc/init.d/nzbdrone
+update-rc.d /etc/init.d/nzbdrone defaults
+
+
+RUN_AS=pi

@@ -38,4 +38,4 @@ sed -i 's#DaemonUsername=root#DaemonUsername='$Bandito_User'#g' $Ban_Conf/nzbget
 cp /opt/Bandito-Box/conf/etc_init.d_nzbget.conf /etc/init.d/nzbget
 chown $Bandito_User:$Bandito_Group /etc/init.d/nzbget
 chmod +x /etc/init.d/nzbget
-update-rc.d nzbget defaults
+update-rc.d /etc/init.d/nzbget defaults
