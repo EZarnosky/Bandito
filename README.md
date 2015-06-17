@@ -42,7 +42,7 @@ Bittorrent Downloaders:
 <ul>
   <li>uTorrent</li>
   <li>Transmission</li>
-  <li>Deluge</li>
+  <li>Deluge ---- Installs but no config yet</li>
   <li>rTorrent/ruTorrent</li>
 </ul>
   
@@ -53,14 +53,14 @@ Web Download Manager (HTTP, HTTPs, DLC, XDCC)
 
 Personal Indexers:
 <ul>
-  <li>BitCannon</li>
+  <li>BitCannon ---- Installs DB, Node, but having issues compiling app</li>
   <li>NZBMegaSearch</li>
 </ul>
 
 Management:
 <ul>
   <li>HTPC-Manager</li>
-  <li>GateOne</li>
+  <li>GateOne ---- 95% complete: Installs and works, still working on config changes</li>
 </ul>
 
 Reverse Proxy:

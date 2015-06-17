@@ -41,6 +41,7 @@ NZBMegaSearch = NO
 
 [Management]
 GateOne = YES
+
 HTPC-Manager = YES
 
 [ReverseProxy]
