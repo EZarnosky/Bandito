@@ -1,1 +1,3 @@
-
+#!/bin/sh
+#---> SickRage
+git clone $Git_SickRage /opt/sickrage

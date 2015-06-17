@@ -1,5 +1,5 @@
 #!/bin/sh
-#---> Install pyLoad
+#---> pyLoad
 
 #--> install dependencies
 apt-get install liblept3 -y

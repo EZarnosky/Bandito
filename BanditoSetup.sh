@@ -1,7 +1,7 @@
-#-----> Setup for Bandito
+#-----> Bandito Box
 #----|
 #----|  Eric Zarnosky
-#----|  ezarnosky@gmail.com
+#----|  ezarnosky@gmail.comi
 #----|
 
 #---> Part 1: Load Conf file and start geneal setup
@@ -21,6 +21,7 @@ mkdir -p $Ban_Scripts
 mkdir -p $Ban_Backup
 mkdir -p $Ban_Logs
 mkdir -p $Ban_Apps
+mkdir -p $Ban_Data
 
 #--> Update the repositories
 echo "Updating Repositories"
@@ -32,18 +33,21 @@ apt-get install apt-transport-https -y
 apt-get install mc -y
 
 #--> Install SMB and NTFS packages
-apt-get install cifs-utils -y
+apt-get install cifs-utils ntfs-3g -y
 
 #--> Create mount folders and mount drives
 mkdir -p /mnt/usb_dl_store
-ln -s /mnt/usb_dl_store /bandito/incoming
+mount -t ntfs-3g -o uid=1000,gid=1000,umask=007 /dev/sda1 /mnt/usb_dl_store
+ln -s /mnt/usb_dl_store/incoming $Ban_Data/incoming
+ln -s /mnt/usb_dl_store/complete $Ban_Data/complete
+ln -s /mnt/usb_dl_store/web_dls $Ban_Data/web_dls
 
 mkdir -p /mnt/net_media_share
 mount -t cifs -o username=$Share_Media_User,password=$Share_Media_Pass,iocharset=$Share_Media_CharSet,sec=$Share_Media_Sec $Share_Media_Path /mnt/net_media_share
-ln -s /mnt/net_media_share $Ban_Home/media
+ln -s /mnt/net_media_share $Ban_Data/media
 
 mkdir -p /mnt/net_backup_share
-mount -t cifs -o $Share_Backup_User,password=$Share_Backup_Pass,iocharset=$Share_Backup_CharSet,sec=$Share_Backup_Sec $Share_Backup_Path /mnt/net_backup_share
+mount -t cifs -o username=$Share_Backup_User,password=$Share_Backup_Pass,iocharset=$Share_Backup_CharSet,sec=$Share_Backup_Sec $Share_Backup_Path /mnt/net_backup_share
 ln -s /mnt/net_backup_share $Ban_Backup/remote_archive
 
 #--> Add mounts to fstab
@@ -61,7 +65,7 @@ openssl req -new -key ssl.key -out bandito_ssl.csr -subj $SSL_Subj
 openssl req -days 36500 -x509 -key bandito_ssl.key -in bandito_ssl.csr > bandito_ssl.crt 
 
 #--> Install coomon shared packages
-apt-get install python git -y
+apt-get install make gcc git python python-dev -y
 
 #---> Part 2: Selective install
 # Read BanditoSetup.Answers for what the user wants installed

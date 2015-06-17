@@ -1,5 +1,5 @@
 #!/bin/sh
-#---> Install Deluge and web client
+#---> Deluge
 apt-get install deluged deluge-web -y
 
 #-> Creat the deluge log files

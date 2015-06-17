@@ -1,1 +1,3 @@
-
+#!/bin/sh
+#---> Sonarr
+git clone 
