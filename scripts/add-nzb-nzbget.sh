@@ -17,6 +17,14 @@ apt-get update
 #--> install NZBGet
 apt-get install nzbget -y
 
+
+
+
+
+
+
+
+
 #--> Backup Conf file
 mkdir $Ban_Backup/NZBGet
 cp /usr/share/nzbget/nzbget.conf $Ban_Backup/NZBGet/nzbget.conf-backup
@@ -26,16 +34,20 @@ ln -s /usr/share/nzbget/nzbget.conf $Ban_Conf/NZBGet.conf
 ln -s /usr/share/nzbget/nzbget.conf /etc/nzbget.conf
 
 #--> Edit the config file
-sed -i "s#MainDir=~/downloads#MainDir="$Ban_Data"/NZBGet#g" $Ban_Conf/nzbget.conf
-sed -i 's#ScriptDir=${MainDir}/scripts#ScriptDir='$Ban_Scripts'/NZBGet#g' $Ban_Conf/nzbget.conf
-sed -i 's#LogFile=${DestDir}/nzbget.log#LogFile='$Ban_Logs'/nzbget.log#g' $Ban_Conf/nzbget.conf
-sed -i 's#ConfigTemplate=/usr/share/nzbget/nzbget.conf#ConfigTemplate='$Ban_Backup'/NZBGet/nzbget.conf-backup#g' $Ban_Conf/nzbget.conf
-sed -i 's#ControlUsername=nzbget#ControlUsername='$Bandito_User'#g' $Ban_Conf/nzbget.conf
-sed -i 's#ControlPassword=tegbzn6789#ControlPassword='$Bandito_Password'#g' $Ban_Conf/nzbget.conf
-sed -i 's#DaemonUsername=root#DaemonUsername='$Bandito_User'#g' $Ban_Conf/nzbget.conf
+sed -i "s#MainDir=~/downloads#MainDir="$Ban_Data"/NZBGet#g" $Ban_Conf/NZBGet.conf
+sed -i 's#ScriptDir=${MainDir}/scripts#ScriptDir='$Ban_Scripts'/NZBGet#g' $Ban_Conf/NZBGet.conf
+sed -i 's#LogFile=${DestDir}/nzbget.log#LogFile='$Ban_Logs'/nzbget.log#g' $Ban_Conf/NZBGet.conf
+sed -i 's#ConfigTemplate=/usr/share/nzbget/nzbget.conf#ConfigTemplate='$Ban_Backup'/NZBGet/nNZBGet.conf-backup#g' $Ban_Conf/NZBGet.conf
+sed -i 's#ControlUsername=nzbget#ControlUsername='$Bandito_User'#g' $Ban_Conf/NZBGet.conf
+sed -i 's#ControlPassword=tegbzn6789#ControlPassword='$Bandito_Password'#g' $Ban_Conf/NZBGet.conf
+sed -i 's#DaemonUsername=root#DaemonUsername='$Bandito_User'#g' $Ban_Conf/NZBGet.conf
 
 #--> Configure NZBGet to autostart on boot
 cp /opt/Bandito-Box/conf/etc_init.d_nzbget.conf /etc/init.d/nzbget
 chown $Bandito_User:$Bandito_Group /etc/init.d/nzbget
+chmod +x /usr/share/nzbget/nzbget.conf
 chmod +x /etc/init.d/nzbget
 update-rc.d nzbget defaults
+
+
+/usr/share/nzbget/nzbget.conf

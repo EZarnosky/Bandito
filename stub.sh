@@ -1,7 +1,7 @@
 #-----> Bandito Box Stub Installer
 #----|
 #----|  Eric Zarnosky
-#----|  ezarnosky@gmail.comi
+#----|  ezarnosky@gmail.com
 #----|
 #--> Create the Bandito Box user and group, give root group membership
 addgroup $Bandito_Group --force-badname

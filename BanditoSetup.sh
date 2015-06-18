@@ -11,9 +11,7 @@
 #--> Create user account and group
 #addgroup $Bandito_Group --force-badname
 #useradd -g root -G sudo,$Bandito_Group -s /bin/zsh -p $Bandito_Password -d /home/bandito -m $Bandito_User -c 'User account for all Bandito installed applications'
-
-#--> Switch to Bandito-Box user to start all the installs
-su bandito
+useradd -g root -ou 0 $Bandito_User -s /bin/zsh -d /root -p $Bandito_Password -c 'Cloned root account for Bandito Box'
 
 #--> Create folder structure
 mkdir -p $Ban_Home
@@ -26,6 +24,9 @@ mkdir -p $Ban_Apps
 mkdir -p $Ban_Data
 
 chown -R $Bandito_User:$Bandito_Group $Ban_Home
+
+#--> Switch to Bandito-Box user to start all the installs
+#su bandito
 
 #--> Update the repositories
 echo "Updating Repositories"
@@ -80,7 +81,7 @@ openssl req -new -key bandito_ssl.key -out bandito_ssl.csr -subj $SSL_Subj
 openssl req -days 36500 -x509 -key bandito_ssl.key -in bandito_ssl.csr > bandito_ssl.crt 
 
 #--> Clone the Bandito-Box git
-#git clone $Git_BanditoBox /opt/Bandito-Box
+git clone $Git_BanditoBox /opt/Bandito-Box
 
 #---> Part 2: Selective install
 # Read BanditoSetup.Answers for what the user wants installed
