@@ -11,7 +11,7 @@
 #--> Create user account and group
 #addgroup $Bandito_Group --force-badname
 #useradd -g root -G sudo,$Bandito_Group -s /bin/zsh -p $Bandito_Password -d /home/bandito -m $Bandito_User -c 'User account for all Bandito installed applications'
-useradd -g root -ou 0 $Bandito_User -s /bin/zsh -d /root -p $Bandito_Password -c 'Cloned root account for Bandito Box'
+#useradd -g root -ou 0 $Bandito_User -s /bin/zsh -d /root -p $Bandito_Password -c 'Cloned root account for Bandito Box'
 
 #--> Create folder structure
 mkdir -p $Ban_Home
@@ -23,11 +23,6 @@ mkdir -p $Ban_Logs
 mkdir -p $Ban_Apps
 mkdir -p $Ban_Data
 
-chown -R $Bandito_User:$Bandito_Group $Ban_Home
-
-#--> Switch to Bandito-Box user to start all the installs
-#su bandito
-
 #--> Update the repositories
 echo "Updating Repositories"
 apt-get update
@@ -35,7 +30,7 @@ apt-get upgrade -y
 apt-get install apt-transport-https -y
 
 #--> Install common shared packages
-apt-get install mc unzip -y
+apt-get install zip unzip -y
 
 #--> Install file system packages
 apt-get install cifs-utils ntfs-3g -y
@@ -57,6 +52,10 @@ mount -t ntfs-3g -o uid=1000,gid=1000,umask=007 /dev/sda1 /mnt/usb_dl_store
 mkdir -p /mnt/usb_dl_store/download
 ln -s /mnt/usb_dl_store/download $Ban_Data/download
 ln -s /mnt/usb_dl_store/backup $Ban_Backup
+echo '' >> /etc/fstab
+echo '# USB Download storage' >> /etc/fstab
+echo "UUID=3C6A08836A083C60 /mnt/usb_dl_store ntfs-3g uid=1000,gid=1000,umask=007 0 0" >> /etc/fstab
+echo '' >> /etc/fstab
 
 mkdir -p /mnt/net_media_share
 mount -t cifs -o username=$Share_Media_User,password=$Share_Media_Pass,iocharset=$Share_Media_CharSet,sec=$Share_Media_Sec $Share_Media_Path /mnt/net_media_share
@@ -76,9 +75,10 @@ echo '' >> /etc/fstab
 
 #--> Generate self signed SSL vertificate
 mkdir -p $Ban_Apps/bandito-box/ssl && cd $Ban_Apps/bandito-box/ssl
-openssl genrsa 1024 > bandito_ssl.key
+openssl genrsa -out bandito_ssl.key 2048
 openssl req -new -key bandito_ssl.key -out bandito_ssl.csr -subj $SSL_Subj
 openssl req -days 36500 -x509 -key bandito_ssl.key -in bandito_ssl.csr > bandito_ssl.crt 
+openssl x509 -inform DER -outform PEM -in bandito_ssl.crt -out bandito_ssl.pem
 
 #--> Clone the Bandito-Box git
 git clone $Git_BanditoBox /opt/Bandito-Box

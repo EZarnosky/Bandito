@@ -2,14 +2,7 @@
 #---> pyLoad
 
 #--> install dependencies
-apt-get install liblept3 -y
-apt-get install python python-crypto python-pycurl python-imaging tesseract-ocr python-qt4 rhino zip unzip -y
-
-#--> Install UnRAR
-mkdir $Ban_Packages/UnRAR/ && cd $Ban_Packages/UnRAR/
-wget $Deb_Unrar
-
-dpkg -i unrar*.deb
+apt-get install liblept3 python-crypto python-pycurl python-imaging tesseract-ocr python-qt4 rhino -y
 
 #--> Install pyLoad
 mkdir $Ban_Packages/pyLoad/ && cd $Ban_Packages/pyLoad/

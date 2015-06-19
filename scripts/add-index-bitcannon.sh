@@ -4,7 +4,7 @@
 apt-get install gcc -y
 
 #-> Part 2: Install MongoDB
-mkdir /opt/mongodb && cd /opt/mongodb
+mkdir /opt/MongoDB && cd /opt/MongoDB
 wget https://github.com/brice-morin/ArduPi/blob/master/mongodb-rpi/mongo/bin/bsondump?raw=true -O bsondump
 wget https://github.com/brice-morin/ArduPi/blob/master/mongodb-rpi/mongo/bin/mongo?raw=true -O mongo
 wget https://github.com/brice-morin/ArduPi/blob/master/mongodb-rpi/mongo/bin/mongod?raw=true -O mongod
