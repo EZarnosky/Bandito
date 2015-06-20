@@ -4,7 +4,7 @@ server {
 
         location ~ ^/htpc($|./*) {
            rewrite /backend/htpc/(.*) /$1 break;
-           proxy_pass http://htpcmanager.local:8089;
+           proxy_pass http://htpcmanager.local:8085;
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -64,7 +64,7 @@ server {
 
         location ~ ^/backend/tv($|./*) {
            rewrite /backend/tv/(.*) /$1 break;
-           proxy_pass http://sickrage.local:8899;
+           proxy_pass http://sickrage.local:8081;
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -88,13 +88,37 @@ server {
 
         location ~ ^/backend/comics($|./*) {
            rewrite /backend/comics/(.*) /$1 break;
-           proxy_pass http://mylar.local:6700;
+           proxy_pass http://mylar.local:8090;
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
         location ~ ^/backend/comics$ {
+           return 302 $scheme://$host$request_uri/;
+        }
+        
+        location ~ ^/backend/ebooks($|./*) {
+           rewrite /backend/ebooks/(.*) /$1 break;
+           proxy_pass http://mylar.local:5299;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location ~ ^/backend/ebooks$ {
+           return 302 $scheme://$host$request_uri/;
+        }
+        
+        location ~ ^/backend/webdl($|./*) {
+           rewrite /backend/webdl/(.*) /$1 break;
+           proxy_pass http://pyload.local:7227;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location ~ ^/backend/webdl$ {
            return 302 $scheme://$host$request_uri/;
         }
 }

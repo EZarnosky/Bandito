@@ -1,0 +1,4 @@
+SR_USER=root
+SR_HOME=/opt/SickRage
+SR_DATA=/opt/SickRage
+SR_PIDFILE=/var/run/sickrage/sickrage.pid

@@ -1,0 +1,4 @@
+CP_USER=root
+CP_HOME=/opt/CouchPotato
+CP_PORT=8054
+CP_DATA=/bandito-box/apps/CouchPotato

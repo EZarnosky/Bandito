@@ -1,0 +1,8 @@
+APP_PATH=/opt/LazyLibrarian
+ENABLE_DAEMON=1
+RUN_AS=root
+WEB_UPDATE=1
+#CONFIG=/bandito-box/conf/LazyLibrarian.conf
+DATADIR=/bandito-box/apps/LazyLibrarian
+PORT=5299
+PID_FILE=/var/run/lazylibrarian/lazylibrarian.pid

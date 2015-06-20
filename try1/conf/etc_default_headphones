@@ -1,0 +1,4 @@
+HP_USER=root
+HP_HOME=/opt/Headphones
+HP_PORT=8181
+HP_DATA=/bandito-box/apps/Headphones

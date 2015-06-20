@@ -1,0 +1,4 @@
+MYLAR_USER=bandito
+MYLAR_HOME=/opt/Mylar
+MYLAR_DATA=/opt/Mylar
+MYLAR_PORT=19004
