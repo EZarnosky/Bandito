@@ -121,4 +121,31 @@ server {
         location ~ ^/backend/webdl$ {
            return 302 $scheme://$host$request_uri/;
         }
+        
+        location /desktop {
+           rewrite ^/desktop/([a-zA-Z0-9-_.]+)\.html$ /index.php?ui=$1 break;
+           rewrite ^/desktop/webos\.webapp$ /sbin/manifestcall.php?type=firefox break;
+           rewrite ^/desktop/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+           proxy_pass http://symbiose.local:7227;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+        
+        location = /desktop/api/group {
+           rewrite ^(.*)$ /sbin/apicallgroup.php break;
+           proxy_pass http://symbiose.local:7227;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location = /desktop/api {
+           rewrite ^(.*)$ /sbin/apicall.php break;
+           proxy_pass http://symbiose.local:7227;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
 }
+

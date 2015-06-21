@@ -5,4 +5,4 @@ WEB_UPDATE=1
 #CONFIG=/bandito-box/conf/LazyLibrarian.conf
 DATADIR=/bandito-box/apps/LazyLibrarian
 PORT=5299
-PID_FILE=/var/run/lazylibrarian/lazylibrarian.pid
+PID_FILE=/bandito-box/.pids/LazyLibrarian.pid
