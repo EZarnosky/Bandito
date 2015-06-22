@@ -10,7 +10,8 @@ pip install psutil
 cp /bandito-box/apps/HTPCManager/initd /etc/init.d/htpcmanager && sed -i 's#APP_PATH=/path/to/htpc-manager#APP_PATH=/bandito-box/apps/HTPCManager#g' /etc/init.d/htpcmanager && chmod +x /etc/init.d/htpcmanager
 
 #----> Import and apply configuration changes
-sed -i 's#PID_FILE=/var/run/htpcmanager.pid#/bandito-box/.pids/HTPCManager.pid#g' /etc/init.d/htpcmanager
+sed -i 's#PID_FILE=/var/run/htpcmanager.pid#PID_FILE=/bandito-box/.pids/HTPCManager.pid#g' /etc/init.d/htpcmanager
+#more options https://github.com/Hellowlol/HTPC-Manager/blob/master2/Htpc.py
 
 #--> Load service information
 update-rc.d htpcmanager defaults
