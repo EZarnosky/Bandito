@@ -1,5 +1,5 @@
 MYLAR_HOME=/bandito-box/apps/Mylar
 MYLAR_USER=root
-MYLAR_PORT=8090
 MYLAR_PIDFILE=/bandito-box/.pids/Mylar.pid
 MYLAR_DATA=/bandito-box/apps/Mylar
+MYLAR_OPTS" --config=/bandito-box/.conf/Mylar.conf"

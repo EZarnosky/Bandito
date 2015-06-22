@@ -25,7 +25,7 @@ cp /bandito-box/apps/CouchPotato/init/ubuntu /etc/init.d/couchpotato && chmod +x
 update-rc.d couchpotato defaults
 
 #----> Configure the conf settings
-service couchpotato start && couchpotato sickrage stop
+service couchpotato start && service couchpotato stop
 #edit the /bandito-box/.conf/CouchPotato.conf with sed commands
 
 #----> Start service

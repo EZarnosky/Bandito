@@ -1,6 +1,5 @@
 HP_HOME=/bandito-box/apps/Headphones
 HP_USER=root
-HP_PORT=8181
 HP_PIDFILE=/bandito-box/.pids/Headphones.pid
 HP_DATA=/bandito-box/apps/Headphones
-HP_OPTS=" --config_file=/bandito-box/.conf/Headphones.conf"
+HP_OPTS=" --config=/bandito-box/.conf/Headphones.conf"
