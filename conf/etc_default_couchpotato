@@ -1,4 +1,4 @@
-CP_HOME=/opt/CouchPotato
+CP_HOME=/bandito-box/apps/CouchPotato
 CP_USER=root
 CP_PORT=5050
 CP_PIDFILE=/bandito-box/.pids/CouchPotato.pid

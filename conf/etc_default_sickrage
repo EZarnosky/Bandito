@@ -1,4 +1,4 @@
-SR_HOME=/opt/SickRage
+SR_HOME=/bandito-box/apps/SickRage
 SR_USER=root
 SR_PORT=8081
 SR_PIDFILE=/bandito-box/.pids/SickRage.pid

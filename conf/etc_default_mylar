@@ -1,4 +1,4 @@
-MYLAR_HOME=/opt/Mylar
+MYLAR_HOME=/bandito-box/apps/Mylar
 MYLAR_USER=root
 MYLAR_PORT=8090
 MYLAR_PIDFILE=/bandito-box/.pids/Mylar.pid

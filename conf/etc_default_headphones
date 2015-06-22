@@ -1,4 +1,4 @@
-HP_HOME=/opt/Headphones
+HP_HOME=/bandito-box/apps/Headphones
 HP_USER=root
 HP_PORT=8181
 HP_PIDFILE=/bandito-box/.pids/Headphones.pid
