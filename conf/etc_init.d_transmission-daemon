@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          transmission-daemon
+# Required-Start:    $local_fs $remote_fs $network
+# Required-Stop:     $local_fs $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts instance of Transmission-Daemon
+# Description:       starts instance of Transmission-Daemon using start-stop-daemon
+### END INIT INFO
+
+# Source Transmission-Daemon configuration
+if [ -f /etc/default/transmission-daemon ]; then
+    . /etc/default/transmission-daemon
+else
+    echo "/etc/default/transmission-daemon not found using default settings.";
+fi
+
+# Source init functions
+. /lib/lsb/init-functions
+
+# Script name
+NAME=transmission-daemon
+
+
+# App name
+DESC=Transmission-Daemon
+
+## Don't edit this file
+## Edit user configuation in /etc/default/transmission-daemon to change
+##
+## TRANS_USER=        # Run-as user, default root
+## TRANS_DAEMON=      # 0 Disables, 1 enables it, default: 1
+## TRANS_CONFIG=      # <path> Where to look for configuration files, default: " --config-dir /var/lib/transmission-daemon/info"
+## TRANS_PIDFILE=     # Location of PID file, default: " -x /var/run/transmission-daemon.pid"
+## TRANS_PORT=        # RPC port, default: 9091
+## TRANS_PEERPORT=    # Port for incoming peers, default: 51413
+## TRANS_LOG=         # <path> Where log file is stored, default: " -e /var/lib/transmission-daemon/info/transmission-daemon.log"
+##
+## EXAMPLE if want to change the default port
+## add TRANS_PORT=9001
+## otherwise default 9091 is used
+
+## The defaults
+# Run as username
+RUN_AS=${TRANS_USER-root}
+
+#Enable daemon
+ENABLE_DAEMON=${TRANS_DAEMON-1}
+
+# Append Path
+export PATH="${PATH:+$PATH:}/sbin"
+
+# Config path
+DATA_DIR=${TRANS_CONFIG-" -g /var/lib/transmission-daemon/info"}
+
+# path to daemon
+DAEMON=/usr/bin/$NAME
+
+# PID File
+PIDFILE=${TRANS_PIDFILE-" -x /var/run/transmission-daemon.pid"}
+
+# Port for service
+PORT=${TRANS_PORT-9091}
+
+# Peer Port
+PEERPORT=${TRANS_PEERPORT=51413}
+
+# Log file location
+LOGFILE=${TRANS_LOG-" -e /var/lib/transmission-daemon/info/transmission-daemon.log"}
+
+
+# Default options for daemon, see transmission-daemon(1) for more options
+OPTIONS=" $DATA_DIR $PIDFILE $PORT $PEERPORT $LOGFILE"
+
+# (optional) extra options to start-stop-daemon
+#START_STOP_OPTIONS="--iosched idle --nicelevel 10"
+
+STOP_TIMEOUT=30
+
+[ -x $DAEMON ] || exit 0
+
+[ -e /etc/default/$NAME ] && . /etc/default/$NAME
+
+start_daemon () {
+    if [ $ENABLE_DAEMON != 1 ]; then
+        log_progress_msg "(disabled)"
+                log_end_msg 255 || true
+    else
+        start-stop-daemon --start \
+        --chuid $USER \
+                $START_STOP_OPTIONS \
+        --exec $DAEMON -- $OPTIONS || log_end_msg $?
+                log_end_msg 0
+    fi
+}
+
+case "$1" in
+    start)
+        log_daemon_msg "Starting bittorrent daemon" "$NAME"
+        start_daemon
+        ;;
+    stop)
+        log_daemon_msg "Stopping bittorrent daemon" "$NAME"
+        start-stop-daemon --stop --quiet \
+            --exec $DAEMON --retry $STOP_TIMEOUT \
+            --oknodo || log_end_msg $?
+        log_end_msg 0
+        ;;
+    reload)
+        log_daemon_msg "Reloading bittorrent daemon" "$NAME"
+        start-stop-daemon --stop --quiet \
+            --exec $DAEMON \
+            --oknodo --signal 1 || log_end_msg $?
+        log_end_msg 0
+        ;;
+    restart|force-reload)
+        log_daemon_msg "Restarting bittorrent daemon" "$NAME"
+        start-stop-daemon --stop --quiet \
+            --exec $DAEMON --retry $STOP_TIMEOUT \
+            --oknodo || log_end_msg $?
+        start_daemon
+        ;;
+    status)
+        status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
+        ;;
+    *)
+        log_action_msg "Usage: /etc/init.d/$NAME {start|stop|reload|force-reload|restart|status}" || true
+        exit 2
+        ;;
+esac
+
+exit 0
