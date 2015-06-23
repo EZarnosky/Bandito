@@ -23,7 +23,6 @@ fi
 # Script name
 NAME=transmission-daemon
 
-
 # App name
 DESC=Transmission-Daemon
 
@@ -53,13 +52,13 @@ ENABLE_DAEMON=${TRANS_DAEMON-1}
 export PATH="${PATH:+$PATH:}/sbin"
 
 # Config path
-DATA_DIR=${TRANS_CONFIG-" -g /var/lib/transmission-daemon/info"}
+DATA_DIR=${TRANS_CONFIG-"-g /var/lib/transmission-daemon/info"}
 
 # path to daemon
 DAEMON=/usr/bin/$NAME
 
 # PID File
-PIDFILE=${TRANS_PIDFILE-" -x /var/run/transmission-daemon.pid"}
+PIDFILE=${TRANS_PIDFILE-"-x /var/run/transmission-daemon.pid"}
 
 # Port for service
 PORT=${TRANS_PORT-9091}
@@ -68,11 +67,11 @@ PORT=${TRANS_PORT-9091}
 PEERPORT=${TRANS_PEERPORT=51413}
 
 # Log file location
-LOGFILE=${TRANS_LOG-" -e /var/lib/transmission-daemon/info/transmission-daemon.log"}
+LOGFILE=${TRANS_LOG-"-e /var/lib/transmission-daemon/info/transmission-daemon.log"}
 
 
 # Default options for daemon, see transmission-daemon(1) for more options
-OPTIONS=" $DATA_DIR $PIDFILE $PORT $PEERPORT $LOGFILE"
+OPTIONS="$DATA_DIR $PIDFILE $PORT $PEERPORT $LOGFILE"
 
 # (optional) extra options to start-stop-daemon
 #START_STOP_OPTIONS="--iosched idle --nicelevel 10"
@@ -89,7 +88,7 @@ start_daemon () {
                 log_end_msg 255 || true
     else
         start-stop-daemon --start \
-        --chuid $USER \
+        --chuid $RUN_AS \
                 $START_STOP_OPTIONS \
         --exec $DAEMON -- $OPTIONS || log_end_msg $?
                 log_end_msg 0
