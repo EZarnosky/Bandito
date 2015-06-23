@@ -16,6 +16,7 @@ tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/headphones > /etc/de
 
 #----> Load conf file for Nginx reverse proxy
 cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf /etc/nginx/conf.d/service-headphones.conf
+ln -s /etc/nginx/conf.d/service-headphones.conf /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       headphones.local" >> /etc/hosts
