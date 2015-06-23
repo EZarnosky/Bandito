@@ -1,4 +1,4 @@
 TRANS_USER=bandito-torrent
-TRANS_CONFIG=" --config-dir /bandito-box/.data/Transmission"
-TRANS_PIDFILE=" -x /bandito-box/.pids/Transmission-Daemon.pid"
-TRANS_LOG= " -e /bandito-box/logs/Transmission-Daemon.log"
+TRANS_CONFIG="-g /bandito-box/.data/Transmission"
+TRANS_PIDFILE="-x /bandito-box/.pids/Transmission-Daemon.pid"
+TRANS_LOG="-e /bandito-box/logs/Transmission-Daemon.log"
