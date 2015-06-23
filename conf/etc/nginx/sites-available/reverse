@@ -3,14 +3,14 @@ server {
         server_name localhost;
 
         location ~ ^/htpc($|./*) {
-           rewrite /backend/htpc/(.*) /$1 break;
+           rewrite /htpc/(.*) /$1 break;
            proxy_pass http://htpcmanager.local:8085;
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
-        location ~ ^/backend/htpc$ {
+        location ~ ^/htpc$ {
            return 302 $scheme://$host$request_uri/;
         }
 

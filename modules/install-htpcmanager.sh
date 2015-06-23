@@ -1,17 +1,27 @@
 #--------> HTPC Manager
+#----> Create user account for service
+useradd --system --user-group --no-create-home bandito-htpcmgr
+
+#----> Create folders for app
+mkdir -p /bandito-box/.data/HTPCManager
+
+#----> Install dependencies
+apt-get update && apt-get upgrade -y && apt-get install build-essential git python-imaging python-dev python-setuptools python-pip vnstat smartmontools -y && apt-get autoremove -y
+pip install psutil
+
 #----> Clone Git Repository
 git clone https://github.com/Hellowlol/HTPC-Manager /bandito-box/apps/HTPCManager
 
-#----> Install dependencies
-apt-get update && apt-get upgrade -y && apt-get install build-essential git python-imaging python-dev python-setuptools python-pip python-cherrypy vnstat smartmontools -y && apt-get autoremove -y
-pip install psutil
+#----> Import and apply configuration changes
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/htpcmanager > /etc/default/htpcmanager
+
+#----> Apply rights and ownership
+chown -R bandito-htpcmgr:bandito-htpcmgr /bandito-box/apps/HTPCManager
+chown -R bandito-htpcmgr:bandito-htpcmgr /bandito-box/.data/HTPCManager
+touch /bandito-box/.conf/HTPCManager.conf && chown -R bandito-htpcmgr:bandito-htpcmgr /bandito-box/.conf/HTPCManager.conf
 
 #----> Configure for autostart on boot
-cp /bandito-box/apps/HTPCManager/initd /etc/init.d/htpcmanager && sed -i 's#APP_PATH=/path/to/htpc-manager#APP_PATH=/bandito-box/apps/HTPCManager#g' /etc/init.d/htpcmanager && chmod +x /etc/init.d/htpcmanager
-
-#----> Import and apply configuration changes
-sed -i 's#PID_FILE=/var/run/htpcmanager.pid#PID_FILE=/bandito-box/.pids/HTPCManager.pid#g' /etc/init.d/htpcmanager
-#more options https://github.com/Hellowlol/HTPC-Manager/blob/master2/Htpc.py
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/init.d/htpcmanager > /etc/init.d/htpcmanager && chmod +x /etc/init.d/htpcmanager
 
 #--> Load service information
 update-rc.d htpcmanager defaults

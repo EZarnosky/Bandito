@@ -1,5 +1,5 @@
 CP_HOME=/bandito-box/apps/CouchPotato
-CP_USER=root
+CP_USER=bandito-movies
 CP_PORT=5050
 CP_PIDFILE=/bandito-box/.pids/CouchPotato.pid
 CP_DATA=/bandito-box/.data/CouchPotato

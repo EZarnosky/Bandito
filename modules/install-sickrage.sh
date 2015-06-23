@@ -15,10 +15,11 @@ git clone https://github.com/SiCKRAGETV/SickRage /bandito-box/apps/SickRage
 mkdir -p /bandito-box/.packages/unRAR/ && cd /bandito-box/.packages/unRAR/ && wget http://sourceforge.net/projects/bananapi/files/unrar_5.2.6-1.arm6_armhf.deb && dpkg -i unrar*.deb
 
 #----> Import and apply configuration changes
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_default_sickrage > /etc/default/sickrage
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/sickrage > /etc/default/sickrage
 
 #----> Apply rights and ownership
-chown -R bandito-tv:bandito-tv /bandito-box/apps/CouchPotato
+chown -R bandito-tv:bandito-tv /bandito-box/apps/SickRage
+chown -R bandito-tv:bandito-tv /bandito-box/.data/SickRage
 touch /bandito-box/.conf/SickRage.conf && chown -R bandito-tv:bandito-tv /bandito-box/.conf/SickRage.conf
 
 #----> Configure for autostart on boot
@@ -32,4 +33,4 @@ service sickrage start && service sickrage stop
 #edit the /bandito-box/.conf/SickRage.conf with sed commands
 
 #----> Start service
-service sickrage restart
+service sickrage start

@@ -15,9 +15,9 @@ apt-get update && apt-get upgrade -y && apt-get install apt-transport-https git-
 echo "Clone Git Repository"
 git clone https://github.com/EZarnosky/Bandito /bandito-box/apps/Bandito-Box
 
+#--> Mod module scripts to make executable
+chmod +x /bandito-box/apps/Bandito-Box/modules/*.sh
+
 #----> Start the main installer
 echo "Start the main installer"
 chmod +x /bandito-box/apps/Bandito-Box/bb-installer.sh && /bandito-box/apps/Bandito-Box/bb-installer.sh
-
-#--> Mod module scripts to make executable
-chmod +x /bandito-box/apps/Bandito-Box/modules/*.sh

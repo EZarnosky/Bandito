@@ -12,10 +12,11 @@ apt-get update && apt-get upgrade -y && apt-get install git-core python -y && ap
 git clone https://github.com/RuudBurger/CouchPotatoServer /bandito-box/apps/CouchPotato
 
 #----> Import and apply configuration changes
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_default_couchpotato > /etc/default/couchpotato
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/couchpotato > /etc/default/couchpotato
 
 #----> Apply rights and ownership
 chown -R bandito-movies:bandito-movies /bandito-box/apps/CouchPotato
+chown -R bandito-movies:bandito-movies /bandito-box/.data/CouchPotato
 touch /bandito-box/.conf/CouchPotato.conf && chown -R bandito-movies:bandito-movies /bandito-box/.conf/CouchPotato.conf
 
 #----> Configure for autostart on boot
@@ -29,4 +30,4 @@ service couchpotato start && service couchpotato stop
 #edit the /bandito-box/.conf/CouchPotato.conf with sed commands
 
 #----> Start service
-service couchpotato restart
+service couchpotato start

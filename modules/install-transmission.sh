@@ -15,7 +15,8 @@ mkdir -p /bandito-box/.data/USB/download/torrent/complete
 mkdir -p /bandito-box/.data/USB/download/torrent/incomplete
 
 #----> Install package
-apt-get update && apt-get install transmission-daemon transmission-cli -y && apt-get autoremove -y
+#apt-get update && apt-get install transmission-daemon transmission-cli -y && apt-get autoremove -y
+apt-get update && apt-get install transmission-daemon -y && apt-get autoremove -y
 
 #----> Import and apply configuration changes
 #--> Backup old init.d and defaults files
@@ -24,8 +25,8 @@ mkdir -p /bandito-box/.backup/Transmission-Daemon/init.d && mv /etc/init.d/trans
 
 #--> Copy new init.d and defaults files
 touch /bandito-box/logs/Transmission-Daemon.log
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_default_transmission-daemon > /etc/default/transmission-daemon
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_init.d_transmission-daemon > /etc/init.d/transmission-daemon && chmod +x /etc/init.d/transmission-daemon
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/transmission-daemon > /etc/default/transmission-daemon
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/init.d/transmission-daemon > /etc/init.d/transmission-daemon && chmod +x /etc/init.d/transmission-daemon
 
 #--> Load service information
 update-rc.d transmission-daemon defaults
@@ -39,7 +40,7 @@ chown -R bandito-torrent:bandito-torrent /bandito-box/.data/USB/download/torrent
 ln -s /bandito-box/.data/Transmission/settings.json /bandito-box/.conf/Transmission.conf
 
 #----> Start service
-service transmission-daemon restart
+service transmission-daemon start
 
 
 #https://trac.transmissionbt.com/wiki/Scripts/initd

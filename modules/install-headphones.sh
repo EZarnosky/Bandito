@@ -1,8 +1,8 @@
 #--------> Headphones Installation
-# Create user account for service
+#----> Create user account for service
 useradd --system --user-group --no-create-home bandito-music
 
-# Create folders for app
+#----> Create folders for app
 mkdir -p /bandito-box/.data/Headphones
 
 #----> Install dependencies
@@ -12,10 +12,11 @@ apt-get update && apt-get upgrade -y && apt-get install git-core python -y && ap
 git clone https://github.com/rembo10/headphones /bandito-box/apps/Headphones
 
 #----> Import and apply configuration changes
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_default_headphones > /etc/default/headphones
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/headphones > /etc/default/headphones
 
 #----> Apply rights and ownership
 chown -R bandito-music:bandito-music /bandito-box/apps/Headphones
+chown -R bandito-music:bandito-music /bandito-box/.data/Headphones
 touch /bandito-box/.conf/Headphones.conf && chown -R bandito-music:bandito-music /bandito-box/.conf/Headphones.conf
 
 #----> Configure for autostart on boot
@@ -29,4 +30,4 @@ service headphones start && service headphones stop
 #edit the /bandito-box/.conf/Headphones.conf with sed commands
 
 #----> Start service
-service headphones restart
+service headphones start

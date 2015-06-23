@@ -16,6 +16,9 @@ mkdir -p /bandito-box/.pids                  # location for all applicaiton PID 
 mkdir -p /bandito-box/.backup                # Location for applicaiton backups - good use for USB drive
 mkdir -p /bandito-box/media                  # Media location - typically a SMB share
 
+#--> Assign permissions to new folders
+chmod -R 777 /bandito-box/.pids
+
 #----> Install dependencies
 echo "Install dependencies"
 apt-get update && apt-get upgrade -y && apt-get install zip unzip p7zip-full cifs-utils ntfs-3g build-essential make gcc -y && apt-get autoremove -y
@@ -50,9 +53,19 @@ rm /bandito-box/tmp/etc_hosts
 
 echo "Time to install individual apps... WIP"
 
-cd /bandito-box/apps/Bandito-Box/modules/
-/bandito-box/apps/Bandito-Box/modules/install-couchpotato.sh
-/bandito-box/apps/Bandito-Box/modules/install-sickrage.sh
-/bandito-box/apps/Bandito-Box/modules/install-headphones.sh
-/bandito-box/apps/Bandito-Box/modules/install-htpcmanager.sh
+echo "\nInstalling Nginx"
 /bandito-box/apps/Bandito-Box/modules/install-nginx.sh
+
+echo "\nInstalling CouchPotato"
+/bandito-box/apps/Bandito-Box/modules/install-couchpotato.sh
+
+echo "\nInstalling SickRage"
+/bandito-box/apps/Bandito-Box/modules/install-sickrage.sh
+
+echo "\nInstalling Headphones"
+/bandito-box/apps/Bandito-Box/modules/install-headphones.sh
+
+echo "\nInstalling HTPC Manager"
+/bandito-box/apps/Bandito-Box/modules/install-htpcmanager.sh
+
+echo "\n\n\nDone for now, working on the other scripts still..... ^.^"

@@ -8,6 +8,7 @@ openssl req -new -key /bandito-box/.conf/ssl/domain.tld.key -out /bandito-box/.c
 openssl x509 -req -days 365 -in /bandito-box/.conf/ssl/domain.tld.csr -signkey /bandito-box/.conf/ssl/domain.tld.key -out /bandito-box/.conf/ssl/domain.tld.crt
 cat /bandito-box/.conf/ssl/domain.tld.key /bandito-box/.conf/ssl/domain.tld.crt > /bandito-box/.conf/ssl/domain.tld.pem
 
+#----> Backup the self signed SSL Certs
 mkdir -p /bandito-box/.backup/ssl
 cp /bandito-box/.conf/ssl/* /bandito-box/.backup/ssl
 
