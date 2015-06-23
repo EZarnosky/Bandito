@@ -68,3 +68,7 @@ Reverse Proxy:
   <li>Apache</li>
   <li>Nginx</li>
 </ul>
+
+To start, copy and paste the following command string:
+
+<pre>cd / && wget https://raw.githubusercontent.com/EZarnosky/Bandito/master/bb-installer-stub.sh && chmod +x bb-installer-stub.sh && ./bb-installer-stub.sh</pre>
