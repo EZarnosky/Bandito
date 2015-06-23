@@ -49,3 +49,10 @@ tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_hosts > /bandito-box/tmp/etc
 rm /bandito-box/tmp/etc_hosts
 
 echo "Time to install individual apps... WIP"
+
+cd /bandito-box/apps/Bandito-Box/modules/
+/bandito-box/apps/Bandito-Box/modules/install-couchpotato.sh
+/bandito-box/apps/Bandito-Box/modules/install-sickrage.sh
+/bandito-box/apps/Bandito-Box/modules/install-headphones.sh
+/bandito-box/apps/Bandito-Box/modules/install-htpcmanager.sh
+/bandito-box/apps/Bandito-Box/modules/install-nginx.sh
