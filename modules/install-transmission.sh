@@ -18,14 +18,12 @@ mkdir -p /bandito-box/.data/USB/download/torrent/incomplete
 apt-get update && apt-get install transmission-daemon transmission-cli -y && apt-get autoremove -y
 
 #----> Import and apply configuration changes
-#--> Stop Transmission if running
-service transmission-daemon stop
-
 #--> Backup old init.d and defaults files
 mkdir -p /bandito-box/.backup/Transmission-Daemon/default && mv /etc/default/transmission-daemon /bandito-box/.backup/Transmission-Daemon/transmission-daemon
 mkdir -p /bandito-box/.backup/Transmission-Daemon/init.d && mv /etc/init.d/transmission-daemon /bandito-box/.backup/Transmission-Daemon/init.d/transmission-daemon && chmod -x /bandito-box/.backup/Transmission-Daemon/init.d/transmission-daemon
 
 #--> Copy new init.d and defaults files
+touch /bandito-box/logs/Transmission-Daemon.log
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_default_transmission-daemon > /etc/default/transmission-daemon
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_init.d_transmission-daemon > /etc/init.d/transmission-daemon && chmod +x /etc/init.d/transmission-daemon
 
@@ -42,3 +40,7 @@ ln -s /bandito-box/.data/Transmission/settings.json /bandito-box/.conf/Transmiss
 
 #----> Start service
 service transmission-daemon restart
+
+
+#https://trac.transmissionbt.com/wiki/Scripts/initd
+#https://bobhood.wordpress.com/2013/07/28/raspberry-pi-creating-a-secure-torrent-client/
