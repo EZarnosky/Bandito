@@ -17,6 +17,12 @@ mkdir -p /bandito-box/.packages/unRAR/ && cd /bandito-box/.packages/unRAR/ && wg
 #----> Import and apply configuration changes
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/sickrage > /etc/default/sickrage
 
+#----> Load conf file for Nginx reverse proxy
+cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-sickrage.conf /etc/nginx/conf.d/service-sickrage.conf
+
+#----> Add host entry for site in /etc/hosts
+echo "127.0.0.1       sickrage.local" >> /etc/hosts
+
 #----> Apply rights and ownership
 chown -R bandito-tv:bandito-tv /bandito-box/apps/SickRage
 chown -R bandito-tv:bandito-tv /bandito-box/.data/SickRage

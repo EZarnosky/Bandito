@@ -14,6 +14,12 @@ git clone https://github.com/rembo10/headphones /bandito-box/apps/Headphones
 #----> Import and apply configuration changes
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/headphones > /etc/default/headphones
 
+#----> Load conf file for Nginx reverse proxy
+cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf /etc/nginx/conf.d/service-headphones.conf
+
+#----> Add host entry for site in /etc/hosts
+echo "127.0.0.1       headphones.local" >> /etc/hosts
+
 #----> Apply rights and ownership
 chown -R bandito-music:bandito-music /bandito-box/apps/Headphones
 chown -R bandito-music:bandito-music /bandito-box/.data/Headphones

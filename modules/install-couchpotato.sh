@@ -14,6 +14,12 @@ git clone https://github.com/RuudBurger/CouchPotatoServer /bandito-box/apps/Couc
 #----> Import and apply configuration changes
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/couchpotato > /etc/default/couchpotato
 
+#----> Load conf file for Nginx reverse proxy
+cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-couchpotato.conf /etc/nginx/conf.d/service-couchpotato.conf
+
+#----> Add host entry for site in /etc/hosts
+echo "127.0.0.1       couchpotato.local" >> /etc/hosts
+
 #----> Apply rights and ownership
 chown -R bandito-movies:bandito-movies /bandito-box/apps/CouchPotato
 chown -R bandito-movies:bandito-movies /bandito-box/.data/CouchPotato

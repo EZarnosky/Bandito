@@ -28,9 +28,15 @@ touch /bandito-box/logs/Transmission-Daemon.log
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/transmission-daemon > /etc/default/transmission-daemon
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/init.d/transmission-daemon > /etc/init.d/transmission-daemon && chmod +x /etc/init.d/transmission-daemon
 
-#--> Load service information
+#----> Load conf file for Nginx reverse proxy
+cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-transmission.conf /etc/nginx/conf.d/service-transmission.conf
+
+#----> Add host entry for site in /etc/hosts
+echo "127.0.0.1       transmission.local" >> /etc/hosts
+
+#----> Load service information
 update-rc.d transmission-daemon defaults
-  
+
 #----> Apply rights and ownership
 chown bandito-torrent:bandito-torrent /bandito-box/logs/Transmission-Daemon.log
 chown -R bandito-torrent:bandito-torrent /bandito-box/.data/Transmission
