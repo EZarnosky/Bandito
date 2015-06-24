@@ -29,7 +29,7 @@ tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/transmission-daemon 
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/init.d/transmission-daemon > /etc/init.d/transmission-daemon && chmod +x /etc/init.d/transmission-daemon
 
 #----> Load conf file for Nginx reverse proxy
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-transmission.conf /etc/nginx/conf.d/service-transmission.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-transmission.conf > /bandito-box/.conf/Nginx/services/service-transmission.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       transmission.local" >> /etc/hosts

@@ -16,7 +16,7 @@ git clone https://github.com/evilhero/mylar /bandito-box/apps/Mylar
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/mylar > /etc/default/mylar
 
 #----> Load conf file for Nginx reverse proxy
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-mylar.conf /etc/nginx/conf.d/service-mylar.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-mylar.conf > /bandito-box/.conf/Nginx/services/service-mylar.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       mylar.local" >> /etc/hosts

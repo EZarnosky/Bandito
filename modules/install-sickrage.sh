@@ -19,7 +19,7 @@ mkdir -p /bandito-box/.packages/unRAR/ && cd /bandito-box/.packages/unRAR/ && wg
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/sickrage > /etc/default/sickrage
 
 #----> Load conf file for Nginx reverse proxy
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-sickrage.conf /etc/nginx/conf.d/service-sickrage.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-sickrage.conf > /bandito-box/.conf/Nginx/services/service-sickrage.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       sickrage.local" >> /etc/hosts
@@ -36,8 +36,16 @@ cp /bandito-box/apps/SickRage/runscripts/init.ubuntu /etc/init.d/sickrage && chm
 update-rc.d sickrage defaults
 
 #----> Configure the conf settings
+#--> Start the serice to generate a conf file, then stop to edit settings
 service sickrage start && service sickrage stop
-#edit the /bandito-box/.conf/SickRage.conf with sed commands
+
+#--> edit the /bandito-box/.conf/CouchPotato.conf with sed commands
+sed -i 's#web_username =#web_username = bandito#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#password = ""#web_password = bandito1#g' /bandito-box/.conf/SickRage.conf   #bandito1
+sed -i 's#web_root = /#web_root = /tv#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#https_key = server.key#https_key = server.key#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#https_cert = server.crt#https_cert = server.crt#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#log_dir = Logs#log_dir = /bandito-box/logs#g' /bandito-box/.conf/SickRage.conf
 
 #----> Start service
 service sickrage start

@@ -7,7 +7,7 @@ mkdir -p /bandito-box/.conf/Nginx
 apt-get update && apt-get upgrade -y && apt-get install nginx apache2-utils -y && apt-get autoremove -y
 
 #----> Create web password
-touch /etc/nginx/.htpasswd && htpasswd -b /etc/nginx/.htpasswd bandito bandito1
+touch /etc/nginx/.htpasswd && htpasswd -b /bandito-box/.conf/Nginx/htpasswd bandito bandito1
 
 #----> Generate self signed SSL cert if none present
 openssl genrsa -out /bandito-box/.conf/ssl/domain.tld.key 1024
@@ -20,22 +20,20 @@ mkdir -p /bandito-box/.backup/ssl
 cp /bandito-box/.conf/ssl/* /bandito-box/.backup/ssl
 
 #----> Copy Nginx conf files to /etc/nginx/conf.d folder
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/auth-basic.conf /etc/nginx/conf.d/auth-basic.conf
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/proxy-control.conf /etc/nginx/conf.d/proxy-control.conf
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/site-available.conf /etc/nginx/conf.d/site-available.conf
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/ssl.conf /etc/nginx/conf.d/ssl.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/auth-basic.conf > /bandito-box/.conf/Nginx/auth-basic.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/proxy-control.conf > /bandito-box/.conf/Nginx/proxy-control.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/ssl.conf > /bandito-box/.conf/Nginx/ssl.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/site-available.conf > /bandito-box/.conf/Nginx/site-available.conf
+
+ln -s /bandito-box/.conf/Nginx/site-available.conf /etc/nginx/conf.d/ssl.conf
 
 #----> Link files to Bandito Box
 ln -s /var/log/nginx/access.log /bandito-box/logs/Nginx-Access.log
 ln -s /var/log/nginx/error.log /bandito-box/logs/Nginx-Error.log
 ln -s /usr/share/nginx/www /bandito-box/.data/Nginx/www
 ln -s /etc/nginx/.htpasswd /bandito-box/.conf/Nginx/htpassword
-ln -s /etc/nginx/conf.d/auth-basic.conf /bandito-box/.conf/Nginx/Auth-Basic.conf
-ln -s /etc/nginx/conf.d/proxy-control.conf /bandito-box/.conf/Nginx/Proxy-Control.conf
-ln -s /etc/nginx/conf.d/site-available.conf /bandito-box/.conf/Nginx/Site-Available.conf
-ln -s /etc/nginx/conf.d/ssl.conf /bandito-box/.conf/Nginx/SSL.conf
-# Each app install the their own /etc/nginx/conf.d/service-*.conf and
-# link it to /bandito-box/.conf/Nginx/
+
+# Each app install the their own /bandito-box/.conf/Nginx/services/service-*.conf and
 
 #----> Unlink default installed site
 unlink /etc/nginx/sites-enabled/default

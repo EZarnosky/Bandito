@@ -16,8 +16,7 @@ git clone https://github.com/rembo10/headphones /bandito-box/apps/Headphones
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/headphones > /etc/default/headphones
 
 #----> Load conf file for Nginx reverse proxy
-cp /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf /etc/nginx/conf.d/service-headphones.conf
-ln -s /etc/nginx/conf.d/service-headphones.conf /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf > /bandito-box/.conf/Nginx/services/service-headphones.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       headphones.local" >> /etc/hosts
@@ -34,8 +33,18 @@ cp /bandito-box/apps/Headphones/init-scripts/init.ubuntu /etc/init.d/headphones 
 update-rc.d headphones defaults
 
 #----> Configure the conf settings
+#--> Start the serice to generate a conf file, then stop to edit settings
 service headphones start && service headphones stop
-#edit the /bandito-box/.conf/Headphones.conf with sed commands
+
+#--> edit the /bandito-box/.conf/CouchPotato.conf with sed commands
+sed -i 's#http_username = ""#http_username = bandito#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#http_password = ""#http_password = bandito1#g' /bandito-box/.conf/Headphones.conf   #bandito1
+sed -i 's#http_root = /#http_root = /music#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#https_key = /bandito-box/apps/Headphones/server.key#https_key = /bandito-box/apps/Headphones/server.key#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#https_cert = /bandito-box/apps/Headphones/server.crt#https_cert = /bandito-box/apps/Headphones/server.crt#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#launch_browser = 1#launch_browser = 0#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#cache_dir = /bandito-box/apps/Headphones/cache$cache_dir = /bandito-box/.data/Headphones/cache#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#log_dir = /bandito-box/apps/Headphones/logs#log_dir = /bandito-box/logs#g' /bandito-box/.conf/Headphones.conf
 
 #----> Start service
 service headphones start
