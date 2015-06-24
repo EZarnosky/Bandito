@@ -32,12 +32,12 @@ DESC=HTPC-Manager
 ## Edit user configuation in /etc/default/htpcmanager to change
 ##
 ## HM_USER=         #$RUN_AS, username to run HTPC-Manager under, the default is htpcmanager
-## HM_HOME=         #$APP_PATH, the location of hypc.py, the default is /opt/HTPCManager
-## HM_DATA=         #$DATA_DIR, the location of db, cache, logs, the default is " --datadir=/opt/HTPCManager"
-## HM_PORT=         #$PORT, the port HTPC-Manager runs on, the default is 8085
-## HM_PIDFILE=      #$PID_FILE, the location of htpc-manager.pid, the default is /var/run/htpc-manager/htpc-manager.pid
-## PYTHON_BIN=      #$DAEMON, the location of the python binary, the default is /usr/bin/python
-## HM_OPTS=         #$EXTRA_DAEMON_OPTS, extra cli option for HTPC-Manager, i.e. " --config=/home/htpc-manager/config.ini"
+## HM_HOME=         #$APP_PATH, the location of hypc.py, the default=/opt/HTPCManager
+## HM_DATA=         #$DATA_DIR, the location of db, cache, logs, the default=/opt/HTPCManager
+## HM_PORT=         #$PORT, the port HTPC-Manager runs on, the default=8085
+## HM_PIDFILE=      #$PID_FILE, the location of htpc-manager.pid, the default=/var/run/htpc-manager/htpc-manager.pid
+## PYTHON_BIN=      #$DAEMON, the location of the python binary, the default=/usr/bin/python
+## HM_OPTS=         #$EXTRA_DAEMON_OPTS, extra cli option for HTPC-Manager
 ##
 ## EXAMPLE if want to run as different user
 ## add HM_USER=username to /etc/default/htpcmanager
@@ -48,7 +48,7 @@ DESC=HTPC-Manager
 RUN_AS=${HM_USER-htpcmanager}
 
 # Path to app SR_HOME=path_to_app_htpc.py
-APP_PATH=${HM_HOME-" --datadir=/opt/HTPCManager"}
+APP_PATH=${HM_HOME-/opt/HTPCManager}
 
 # Data directory where htpcmanager.db, cache and logs are stored
 DATA_DIR=${HM_DATA-/opt/HTPCManager}
@@ -57,18 +57,18 @@ DATA_DIR=${HM_DATA-/opt/HTPCManager}
 PORT=${HM_PORT-8085}
 
 # Path to store PID file
-PID_FILE=${SR_PIDFILE-/var/run/htpc-manager/htpc-manager.pid}
+PID_FILE=${HM_PIDFILE-/var/run/htpc-manager/htpc-manager.pid}
 
 # path to python bin
 DAEMON=${PYTHON_BIN-/usr/bin/python}
 
-# Extra daemon option like: SR_OPTS=" --config=/home/htpc-manager/config.ini"
+# Extra daemon option
 EXTRA_DAEMON_OPTS=${HM_OPTS-}
 
 ##
 
 PID_PATH=`dirname $PID_FILE`
-DAEMON_OPTS=" htpc.py --daemon --pid=${PID_FILE} --datadir=${DATA_DIR} --port=${PORT} ${EXTRA_DAEMON_OPTS}"
+DAEMON_OPTS=" Htpc.py --pid=${PID_FILE} --datadir ${DATA_DIR} --port=${PORT} ${EXTRA_DAEMON_OPTS}"
 
 ##
 
@@ -97,7 +97,7 @@ fi
 
 start_htpcmanager() {
     echo "Starting $DESC"
-    start-stop-daemon -d $APP_PATH -c $RUN_AS --start --pidfile $PID_FILE --exec $DAEMON -- $DAEMON_OPTS
+    start-stop-daemon -d $APP_PATH -c $RUN_AS --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON $
 }
 
 stop_htpcmanager() {
