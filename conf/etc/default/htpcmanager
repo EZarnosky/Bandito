@@ -1,6 +1,5 @@
 HM_USER=root
 HM_HOME=/bandito-box/apps/HTPCManager
-HM_DATA=" --datadir=/bandito-box/.data/HTPCManager"
+HM_DATA=/bandito-box/.data/HTPCManager
 HM_PIDFILE=/bandito-box/.pids/HTPCManager.pid
 PYTHON_BIN=/usr/bin/python
-HM_OPTS=" --config=/bandito-box/.conf/HTPCManager.config"
