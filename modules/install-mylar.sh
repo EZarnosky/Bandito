@@ -1,3 +1,4 @@
+#!/bin/sh
 #--------> Mylar Installation
 # Create user account for service
 useradd --system --user-group --no-create-home bandito-comics
