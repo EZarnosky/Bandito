@@ -1,7 +1,7 @@
 #--------> Nginx
 #----> Create folders for app
 mkdir -p /bandito-box/.data/Nginx
-mkdir -p /bandito-box/.conf/Nginx
+mkdir -p /bandito-box/.conf/Nginx/services/
 
 #----> Install dependencies
 apt-get update && apt-get upgrade -y && apt-get install nginx apache2-utils -y && apt-get autoremove -y
@@ -20,12 +20,13 @@ mkdir -p /bandito-box/.backup/ssl
 cp /bandito-box/.conf/ssl/* /bandito-box/.backup/ssl
 
 #----> Copy Nginx conf files to /etc/nginx/conf.d folder
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/auth-basic.conf > /bandito-box/.conf/Nginx/auth-basic.conf
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/proxy-control.conf > /bandito-box/.conf/Nginx/proxy-control.conf
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/ssl.conf > /bandito-box/.conf/Nginx/ssl.conf
+
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/auth-basic.conf > /bandito-box/.conf/Nginx/auth-basic.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/proxy-control.conf > /bandito-box/.conf/Nginx/proxy-control.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/ssl.conf > /bandito-box/.conf/Nginx/ssl.conf
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/site-available.conf > /bandito-box/.conf/Nginx/site-available.conf
 
-ln -s /bandito-box/.conf/Nginx/site-available.conf /etc/nginx/conf.d/ssl.conf
+ln -s /bandito-box/.conf/Nginx/site-available.conf /etc/nginx/conf.d/site-available.conf
 
 #----> Link files to Bandito Box
 ln -s /var/log/nginx/access.log /bandito-box/logs/Nginx-Access.log

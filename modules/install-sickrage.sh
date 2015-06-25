@@ -19,7 +19,7 @@ mkdir -p /bandito-box/.packages/unRAR/ && cd /bandito-box/.packages/unRAR/ && wg
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/sickrage > /etc/default/sickrage
 
 #----> Load conf file for Nginx reverse proxy
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-sickrage.conf > /bandito-box/.conf/Nginx/services/service-sickrage.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/services/service-sickrage.conf > /bandito-box/.conf/Nginx/services/service-sickrage.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       sickrage.local" >> /etc/hosts

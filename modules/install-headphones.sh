@@ -16,7 +16,7 @@ git clone https://github.com/rembo10/headphones /bandito-box/apps/Headphones
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/headphones > /etc/default/headphones
 
 #----> Load conf file for Nginx reverse proxy
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-headphones.conf > /bandito-box/.conf/Nginx/services/service-headphones.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/services/service-headphones.conf > /bandito-box/.conf/Nginx/services/service-headphones.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       headphones.local" >> /etc/hosts

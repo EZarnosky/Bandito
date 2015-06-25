@@ -43,13 +43,13 @@ mount -a
 #----> Change MOTD banner
 echo "Change MOTD banner"
 mv /etc/motd /bandito-box/.backup/motd.backup
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_motd > /etc/motd
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/motd > /etc/motd
 
 #----> Add records to hosts file
 echo "Add records to hosts file"
 cp /etc/hosts /bandito-box/.backup/hosts.backup
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_hosts > /bandito-box/tmp/etc_hosts && cat /bandito-box/tmp/etc_hosts >> /etc/hosts
-rm /bandito-box/tmp/etc_hosts
+#tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc_hosts > /bandito-box/tmp/etc_hosts && cat /bandito-box/tmp/etc_hosts >> /etc/hosts
+#rm /bandito-box/tmp/etc_hosts
 
 echo "Time to install individual apps... WIP"
 

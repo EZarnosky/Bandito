@@ -18,7 +18,7 @@ tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/default/htpcmanager > /etc/d
 tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/init.d/htpcmanager > /etc/init.d/htpcmanager && chmod +x /etc/init.d/htpcmanager
 
 #----> Load conf file for Nginx reverse proxy
-tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/service-htpcmanager.conf > /bandito-box/.conf/Nginx/services/service-htpcmanager.conf
+tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/nginx/conf.d/services/service-htpcmanager.conf > /bandito-box/.conf/Nginx/services/service-htpcmanager.conf
 
 #----> Add host entry for site in /etc/hosts
 echo "127.0.0.1       htpcmanager.local" >> /etc/hosts
