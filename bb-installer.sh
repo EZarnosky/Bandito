@@ -54,18 +54,18 @@ rm /bandito-box/tmp/etc_hosts
 echo "Time to install individual apps... WIP"
 
 echo "\nInstalling Nginx"
-/bandito-box/apps/Bandito-Box/modules/install-nginx.sh
+#/bandito-box/apps/Bandito-Box/modules/install-nginx.sh
 
 echo "\nInstalling CouchPotato"
-/bandito-box/apps/Bandito-Box/modules/install-couchpotato.sh
+#/bandito-box/apps/Bandito-Box/modules/install-couchpotato.sh
 
 echo "\nInstalling SickRage"
-/bandito-box/apps/Bandito-Box/modules/install-sickrage.sh
+#/bandito-box/apps/Bandito-Box/modules/install-sickrage.sh
 
 echo "\nInstalling Headphones"
-/bandito-box/apps/Bandito-Box/modules/install-headphones.sh
+#/bandito-box/apps/Bandito-Box/modules/install-headphones.sh
 
 echo "\nInstalling HTPC Manager"
-/bandito-box/apps/Bandito-Box/modules/install-htpcmanager.sh
+#/bandito-box/apps/Bandito-Box/modules/install-htpcmanager.sh
 
 echo "\n\n\nDone for now, working on the other scripts still..... ^.^"
