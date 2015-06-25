@@ -37,14 +37,16 @@ update-rc.d headphones defaults
 service headphones start && service headphones stop
 
 #--> edit the /bandito-box/.conf/CouchPotato.conf with sed commands
+sleep 2s
 sed -i 's#http_username = ""#http_username = bandito#g' /bandito-box/.conf/Headphones.conf
-sed -i 's#http_password = ""#http_password = bandito1#g' /bandito-box/.conf/Headphones.conf   #bandito1
+sed -i 's#http_password = ""#http_password = bandito1#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#http_root = /#http_root = /music#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#https_key = /bandito-box/apps/Headphones/server.key#https_key = /bandito-box/apps/Headphones/server.key#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#https_cert = /bandito-box/apps/Headphones/server.crt#https_cert = /bandito-box/apps/Headphones/server.crt#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#launch_browser = 1#launch_browser = 0#g' /bandito-box/.conf/Headphones.conf
-sed -i 's#cache_dir = /bandito-box/apps/Headphones/cache$cache_dir = /bandito-box/.data/Headphones/cache#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#cache_dir = /bandito-box/apps/Headphones/cache#cache_dir = /bandito-box/.data/Headphones/cache#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#log_dir = /bandito-box/apps/Headphones/logs#log_dir = /bandito-box/logs#g' /bandito-box/.conf/Headphones.conf
+sed -i 's#api_enabled = 0#api_enabled = 1#g' /bandito-box/.conf/Headphones.conf
 
 #----> Start service
-service headphones start
+service headphones start && service nginx restart

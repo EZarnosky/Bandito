@@ -48,4 +48,4 @@ sed -i 's#https_cert = server.crt#https_cert = server.crt#g' /bandito-box/.conf/
 sed -i 's#log_dir = Logs#log_dir = /bandito-box/logs#g' /bandito-box/.conf/SickRage.conf
 
 #----> Start service
-service sickrage start
+service sickrage start && service nginx restart
