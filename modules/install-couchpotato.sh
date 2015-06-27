@@ -36,6 +36,10 @@ update-rc.d couchpotato defaults
 service couchpotato start && service couchpotato stop
 
 #--> edit the /bandito-box/.conf/CouchPotato.conf with sed commands
+#> Need to wait for service to fully shutdown and release conf file
+sleep 2s
+
+#> Begin edits
 sed -i 's#username =#username = bandito#g' /bandito-box/.conf/CouchPotato.conf
 sed -i 's#password =#password = 004f9914349662faf220a5a5efeed57f#g' /bandito-box/.conf/CouchPotato.conf   #bandito1
 sed -i 's#url_base =#url_base = /movies#g' /bandito-box/.conf/CouchPotato.conf

@@ -1,0 +1,3 @@
+NG_CONFIG=/bandito-box/.conf/NZBGet.conf
+NG_PID=/bandito-box/.pids/NZBGet.pid
+NG_USER=bandito-nzb

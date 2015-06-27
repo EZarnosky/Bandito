@@ -34,4 +34,4 @@ tr -d '\r' < /bandito-box/apps/Bandito-Box/conf/etc/init.d/htpcmanager > /etc/in
 update-rc.d htpcmanager defaults
 
 #----> Start service
-service htpcmanager restart && service nginx restart
+service htpcmanager start && service nginx restart

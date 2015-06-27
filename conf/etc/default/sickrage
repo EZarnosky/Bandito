@@ -1,5 +1,5 @@
 SR_HOME=/bandito-box/apps/SickRage
 SR_USER=bandito-tv
 SR_PIDFILE=/bandito-box/.pids/SickRage.pid
-SR_DATA=/bandito-box/apps/SickRage
+SR_DATA=/bandito-box/.data/SickRage
 SR_OPTS=" --config=/bandito-box/.conf/SickRage.conf"

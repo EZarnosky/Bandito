@@ -1,5 +1,4 @@
 #!/bin/sh
-#sic
 ### BEGIN INIT INFO
 # Provides:          HTPC-Manager
 # Required-Start:    $local_fs $network $remote_fs
@@ -9,7 +8,7 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: starts instance of HTPC-Manager
-# Description:       starts instance of HTPC-Manager using start-stop-daemon
+# Description:       starts instance of HTPC-cManager using start-stop-daemon
 ### END INIT INFO
 
 # Source HTPC-Manager configuration
@@ -35,7 +34,7 @@ DESC=HTPC-Manager
 ## HM_HOME=         #$APP_PATH, the location of hypc.py, the default=/opt/HTPCManager
 ## HM_DATA=         #$DATA_DIR, the location of db, cache, logs, the default=/opt/HTPCManager
 ## HM_PORT=         #$PORT, the port HTPC-Manager runs on, the default=8085
-## HM_PIDFILE=      #$PID_FILE, the location of htpc-manager.pid, the default=/var/run/htpc-manager/htpc-manager.pid
+## HM_PIDFILE=      #$PID_FILE, the location of htpc-manager.pid, the default=/run/htpc-manager.pid
 ## PYTHON_BIN=      #$DAEMON, the location of the python binary, the default=/usr/bin/python
 ## HM_OPTS=         #$EXTRA_DAEMON_OPTS, extra cli option for HTPC-Manager
 ##
@@ -57,7 +56,7 @@ DATA_DIR=${HM_DATA-/opt/HTPCManager}
 PORT=${HM_PORT-8085}
 
 # Path to store PID file
-PID_FILE=${HM_PIDFILE-/var/run/htpc-manager/htpc-manager.pid}
+PID_FILE=${HM_PIDFILE-/run/htpc-manager.pid}
 
 # path to python bin
 DAEMON=${PYTHON_BIN-/usr/bin/python}
@@ -97,7 +96,7 @@ fi
 
 start_htpcmanager() {
     echo "Starting $DESC"
-    start-stop-daemon -d $APP_PATH -c $RUN_AS --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON $
+    start-stop-daemon -d $APP_PATH -c $RUN_AS --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON -- $DAEMON_OPTS
 }
 
 stop_htpcmanager() {

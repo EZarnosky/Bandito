@@ -1,0 +1,244 @@
+#https://ffmpeg.zeranoe.com/forum/viewtopic.php?t=2298
+#--------------------------------------------------------------------------
+# http://www.raspberrypi.org/forums/viewtopic.php?f=43&t=53936
+# http://www.jeffreythompson.org/blog/2014/11/13/installing-ffmpeg-for-raspberry-pi/
+
+# Before beginning the following steps, install a lot of things 
+# including 
+# "libasound2-dev" so that you get the ALSA headers and library. 
+# After this is done, you'll find the ALSA headers in /usr/include/alsa, and the sound library in /usr/lib/arm-linux-gnueabihf/
+#
+
+sudo apt-get remove -y ffmpeg
+
+sudo apt-get install -y libavcodec-dev
+sudo apt-get install -y libx264-dev
+sudo apt-get install -y libmp3lame-dev
+sudo apt-get install -y libasound2-dev 
+sudo apt-get install -y libssl-dev
+sudo apt-get install -y libass-dev
+sudo apt-get install -y libpq-dev
+
+
+sudo apt-get install -y zlib1g-dev 
+sudo apt-get install -y libgpac-dev 
+sudo apt-get install -y fftw3-dev 
+sudo apt-get install -y libfftw3-dev
+
+sudo apt-get install -y libavutil-dev
+sudo apt-get install -y libjpeg62-dev
+sudo apt-get install -y libavformat-dev
+sudo apt-get install -y libc6-dev
+sudo apt-get install -y libbz2-dev
+
+sudo apt-get install -y libfreetype6-dev 
+sudo apt-get install -y libsdl1.2-dev 
+sudo apt-get install -y libtheora-dev 
+sudo apt-get install -y libva-dev 
+sudo apt-get install -y libvdpau-dev 
+sudo apt-get install -y libvorbis-dev 
+
+sudo apt-get install -y libavutil51
+sudo apt-get install -y libjpeg62 
+sudo apt-get install -y libavformat53
+sudo apt-get install -y libavcodec53
+sudo apt-get install -y libpq5
+##sudo apt-get install -y libmysqlclient18 libmysqlclient-dev
+
+
+sudo apt-get install -y gpac
+
+sudo apt-get install -y wget
+
+sudo apt-get install -y git-core
+
+#sudo apt-get install -y git  # no use git-core
+
+sudo apt-get install -y autoconf
+sudo apt-get install -y automake 
+sudo apt-get install -y libtool
+sudo apt-get install -y textinfo
+
+
+
+sudo apt-get install -y texi2html 
+sudo apt-get install -y build-essential
+
+
+sudo apt-get install -y cmake
+
+sudo apt-get install -y pkg-config 
+#sudo apt-get install -y gcc
+
+
+# build sources in /usr/src. 
+
+sudo md /usr/src
+sudo chmod 777 /usr/src
+cd /usr/src
+
+# advice from one post :-
+# I first built the assembler YASM, but I now believe this step is unnecessary.
+# So, it is important to include the flag to disable the use of the assembler.
+# skip this step
+#
+## an assembler used by x264 and ffmpeg
+#cd /usr/src
+#wget http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz
+#tar xzvf yasm-1.2.0.tar.gz
+#cd yasm-1.2.0
+#./configure
+#make
+#sudo make install
+#
+
+# So, it is important to include the flag to disable the use of the assembler.
+
+#-----
+# 1. build_h264
+# It installed its libraries in /usr/local/lib/libx264
+cd /usr/src
+sudo chmod 777 x264
+sudo rm -rf x264
+sudo git clone git://git.videolan.org/x264
+cd x264
+# the line below was the original advice - the line below is what I wonder will work
+# sudo ./configure --disable-asm --disable-opencl
+sudo ./configure --disable-asm --host=arm-unknown-linux-gnueabi --enable-static --disable-opencl
+sudo make
+sudo make install
+
+#-----
+# 2. build a lame MP3 encoder. 
+# It installs the resulting library in /usr/local/lib/libmp3lame
+cd /usr/src
+sudo chmod 777 lame-3.99
+sudo rm -rf lame-3.99
+sudo wget http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.tar.gz
+sudo tar xzvf lame-3.99.tar.gz
+cd lame-3.99
+# the line below was the original advice - the line below is what I wonder will work
+# sudo ./configure
+sudo ./configure --disable-asm --enable-static --host=arm-unknown-linux-gnueabi 
+sudo make
+sudo make install
+
+#-----
+# 3. build a LIBVPX video encoder 
+# It installs the resulting library in /usr/local/lib/libvpx ??
+# libvpx is an emerging open video compression library which is gaining popularity for distributing high definition video content on the internet. 
+# FFmpeg supports using the libvpx library to compress video content. To acquire and build libvpx, perform the following:
+cd /usr/src
+sudo chmod 777 libvpx
+sudo rm -rf libvpx
+sudo git clone http://git.chromium.org/webm/libvpx.git
+cd libvpx
+# the line below was the original advice - the line below is what I wonder will work
+# sudo ./configure 
+sudo ./configure --disable-asm --host=arm-unknown-linux-gnueabi --enable-static
+sudo make SYS=posix 
+sudo make install
+
+#-----
+# 4. build an rtmp module
+# It installs the resulting library in /usr/local/lib/librtmp ??
+# librtmp provides support for the RTMP content streaming protocol developed by Adobe 
+# and commonly used to distribute content to flash video players on the web. 
+# FFmpeg supports using the librtmp library to stream content from RTMP sources. 
+cd /usr/src
+sudo chmod 777 rtmpdump
+sudo rm -rf rtmpdump
+sudo git clone git://git.ffmpeg.org/rtmpdump
+cd rtmpdump
+sudo ./configure --disable-asm --enable-static --host=arm-unknown-linux-gnueabi 
+sudo make SYS=posix 
+sudo make install
+
+#-----
+# 5. do NOT build an aac HC module - instead rely on libfaac which is LC
+#Downloading Compiling LibaacPlus - HC
+## LIBAACPLUS AAC ENCODER encoder
+# cd /usr/src
+# sudo chmod 777 libaacplus-2.0.2
+# sudo rm -rf libaacplus-2.0.2
+# sudo wget http://tipok.org.ua/downloads/media/aacplus/libaacplus/libaacplus-2.0.2.tar.gz
+# sudo tar -xzf libaacplus-2.0.2.tar.gz
+# cd libaacplus-2.0.2
+# sudo ./autogen.sh --with-parameter-expansion-string-replace-capable-shell=/bin/bash --host=arm-unknown-linux-gnueabi --enable-static
+# sudo make
+# sudo make install
+#
+
+#-----
+# 6. build the FAAC aac LC module
+# It installes the resulting library in /usr/local/lib/libfaac.
+# THERE NIS AN ISUE TO BE FIXED FIRST by editing common/mp4v2/mpeg4ip.h around line 126, 
+# - comment out the line 3 lines starting with "char *strcasestr" by putting ### at the start of the line
+sudo nano common/mp4v2/mpeg4ip.h
+cd /usr/src
+sudo chmod 777 faac-1.28
+sudo rm -rf faac-1.28
+sudo curl -#LO http://downloads.sourceforge.net/project/faac/faac-src/faac-1.28/faac-1.28.tar.gz
+sudo tar xzvf faac-1.28.tar.gz
+cd faac-1.28
+# sudo ./configure
+sudo ./configure --disable-asm --enable-static --host=arm-unknown-linux-gnueabi 
+sudo make
+sudo make install
+
+#-----
+# build libxvid, google to find out how
+# --enable-libxvid
+#
+
+#-----
+# build libwebp, google to find out how
+# --enable-libwebp
+#
+
+#-----
+# build libtheora, google to find out how
+# --enable-libtheora 
+#
+
+#-----
+# build libvorbis, google to find out how
+# --enable-libvorbis 
+#
+
+#-----
+# build libass, google to find out how
+# --enable-libass
+#
+
+#-----
+# This bit was apparently only necessary for shared libraries ??? 
+# Because each of the libraries is installed in /usr/local/lib, 
+# for ffmpeg to find the libraries, the Load-Library environment variable needs to be set. 
+# You can run ffmpeg this way.
+sudo echo "/usr/local/lib" > /etc/ld.so.conf.d/libx264.conf
+sudo ldconfig
+
+# do we need to REBOOT now ?
+
+#-----
+# Finally, build a STATIC ffmpeg from a nightly snapshot
+# I have been warned that it would take a long time 3 to 12 hours
+# It installs the resulting program in /usr/bin/ffmpeg
+cd /usr/src/
+sudo chmod 777 ffmpeg
+sudo rm -rf ffmpeg
+sudo git clone git://source.ffmpeg.org/ffmpeg.git
+#    sudo git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+cd ffmpeg      
+sudo ./configure --arch=armel --target-os=linux --enable-static --disable-asm --enable-gpl --prefix=/usr --enable-nonfree --enable-libmp3lame --enable-libfaac --enable-libx264 --enable-version3 --disable-mmx --enable-libxvpx --enable-libass --enable-librtmp
+sudo make
+sudo make install
+
+#--- finsihed ?
+# we should have a tsatic ffmpeg build now ...
+#
+# to do an average bitrate use  -c:a libfaac -b:a 224k 
+# to do a WDTV compatible coversion, 
+# ffmpeg -i input.mp4 -map 0:v -c:v h264 -preset fast -profile:v high -level 4.1 -crf 16-coder 0 -movflags +faststart -y output.mp4
+#

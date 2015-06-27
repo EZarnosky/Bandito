@@ -10,24 +10,96 @@
 # Short-Description: starts instance of NZBGet
 # Description:       starts instance of NZBGet using start-stop-daemon
 ### END INIT INFO
-NZBGETPATH=$(which nzbget)
+
+# Source NZBGet configuration
+if [ -f /etc/default/nzbget ]; then
+    . /etc/default/nzbget
+else
+    echo "/etc/default/nzbget not found using default settings.";
+fi
+
 # Source init functions
 . /lib/lsb/init-functions
+
+# Script name
+NAME=nzbget
+
+# App name
+DESC=NZBGet
+
+## Don't edit this file
+## Edit user configuation in /etc/default/htpcmanager to change
+##
+## NG_USER=         #$RUN_AS, username to run NZBGet under, the default is root
+## NG_PIDFILE=      #$PID_FILE, the location of htpc-manager.pid, the default=/run/nzbget.pid
+##
+## EXAMPLE if want to run as different user
+## add NG_USER=username to /etc/default/nzbget
+## otherwise default root is used
+
+## The defaults
+# Run as username
+RUN_AS=${NG_USER-root}
+
+# Path to store PID file
+PID_FILE=${NG_PID-/run/nzbget.pid}
+
+##
+DAEMON=$(which nzbget)
+
+CONFIG_FILE=${NG_CONFIG-/usr/share/nzbget/nzbget.conf}
+
+PID_PATH=`dirname $PID_FILE`
+
+DAEMON_PATH=`dirname $DAEMON`
+
+DAEMON_OPTS=" -D -c ${CONFIG_FILE}"
+
+##
+
+test -x $DAEMON || exit 0
+
+set -e
+
+# Create PID directory if not exist and ensure the HTPC-Manager user can write to it
+if [ ! -d $PID_PATH ]; then
+    mkdir -p $PID_PATH
+    chown $RUN_AS $PID_PATH
+fi
+
+if [ ! -d $PID_PATH ]; then
+    mkdir -p $PID_PATH
+    chown $RUN_AS $PID_PATH
+fi
+
+if [ -e $PID_FILE ]; then
+    PID=`cat $PID_FILE`
+    if ! kill -0 $PID > /dev/null 2>&1; then
+        echo "Removing stale $PID_FILE"
+        rm $PID_FILE
+    fi
+fi
+
 # Start/stop the NZBget daemon.
 #
 case "$1" in
+
 start)   echo -n "Start services: NZBget"
-$NZBGETPATH -D
+    start-stop-daemon -d -c $RUN_AS --start --background --pidfile $PID_FILE --make-pidfile --exec $DAEMON_OPTS
 ;;
+
 stop)   echo -n "Stop services: NZBget"
-$NZBGETPATH -Q
+    start-stop-daemon --stop --pidfile $PID_FILE --retry 15
 ;;
+
 restart)
-$0 stop
-$0 start
+    $0 stop
+    $0 start
 ;;
+
 *)   echo "Usage: $0 start|stop|restart"
-exit 1
+    exit 1
 ;;
+
 esac
 exit 0

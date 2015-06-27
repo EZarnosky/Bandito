@@ -37,9 +37,13 @@ update-rc.d headphones defaults
 service headphones start && service headphones stop
 
 #--> edit the /bandito-box/.conf/CouchPotato.conf with sed commands
+#> Need to wait for service to fully shutdown and release conf file
 sleep 2s
-sed -i 's#http_username = ""#http_username = bandito#g' /bandito-box/.conf/Headphones.conf
-sed -i 's#http_password = ""#http_password = bandito1#g' /bandito-box/.conf/Headphones.conf
+
+#> Begin edits
+# Issues with user and password for reverse proxy - https://github.com/rembo10/headphones/issues/2077
+#sed -i 's#http_username = ""#http_username = bandito#g' /bandito-box/.conf/Headphones.conf
+#sed -i 's#http_password = ""#http_password = bandito1#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#http_root = /#http_root = /music#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#https_key = /bandito-box/apps/Headphones/server.key#https_key = /bandito-box/apps/Headphones/server.key#g' /bandito-box/.conf/Headphones.conf
 sed -i 's#https_cert = /bandito-box/apps/Headphones/server.crt#https_cert = /bandito-box/apps/Headphones/server.crt#g' /bandito-box/.conf/Headphones.conf

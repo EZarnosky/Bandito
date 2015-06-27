@@ -28,7 +28,7 @@ echo "127.0.0.1       sickrage.local" >> /etc/hosts
 chown -R bandito-tv:bandito-tv /bandito-box/apps/SickRage
 chown -R bandito-tv:bandito-tv /bandito-box/.data/SickRage
 touch /bandito-box/.conf/SickRage.conf && chown -R bandito-tv:bandito-tv /bandito-box/.conf/SickRage.conf
-
+touch /bandito-box/logs/sickrage.log && chown -R bandito-tv:bandito-tv /bandito-box/logs/sickrage.log
 #----> Configure for autostart on boot
 cp /bandito-box/apps/SickRage/runscripts/init.ubuntu /etc/init.d/sickrage && chmod +x /etc/init.d/sickrage
 
@@ -40,12 +40,24 @@ update-rc.d sickrage defaults
 service sickrage start && service sickrage stop
 
 #--> edit the /bandito-box/.conf/CouchPotato.conf with sed commands
-sed -i 's#web_username =#web_username = bandito#g' /bandito-box/.conf/SickRage.conf
+#> Need to wait for service to fully shutdown and release conf file
+sleep 2s
+
+#> Begin edits
+#odd issue, a conf file is not being generated when the service start, only after it is saved the first time
+sed -i 's#web_username = ""#web_username = bandito#g' /bandito-box/.conf/SickRage.conf
 sed -i 's#password = ""#web_password = bandito1#g' /bandito-box/.conf/SickRage.conf   #bandito1
-sed -i 's#web_root = /#web_root = /tv#g' /bandito-box/.conf/SickRage.conf
-sed -i 's#https_key = server.key#https_key = server.key#g' /bandito-box/.conf/SickRage.conf
-sed -i 's#https_cert = server.crt#https_cert = server.crt#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#web_root = ""#web_root = /tv#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#https_key = server.key#https_key = /bandito-box/.conf/ssl/domain.tld.key#g' /bandito-box/.conf/SickRage.conf
+sed -i 's#https_cert = server.crt#https_cert = /bandito-box/.conf/ssl/domain.tld.pem#g' /bandito-box/.conf/SickRage.conf
 sed -i 's#log_dir = Logs#log_dir = /bandito-box/logs#g' /bandito-box/.conf/SickRage.conf
+
+#echo 'web_username = bandito' >> /bandito-box/.conf/SickRage.conf
+#echo 'web_password = bandito1' >> /bandito-box/.conf/SickRage.conf
+#echo 'web_root = /tv' >> /bandito-box/.conf/SickRage.conf
+#echo 'https_key = /bandito-box/.conf/ssl/domain.tld.key' >> /bandito-box/.conf/SickRage.conf
+#echo 'https_cert = /bandito-box/.conf/ssl/domain.tld.pem' >> /bandito-box/.conf/SickRage.conf
+#echo 'log_dir = /bandito-box/logs' >> /bandito-box/.conf/SickRage.conf
 
 #----> Start service
 service sickrage start && service nginx restart
